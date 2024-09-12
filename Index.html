@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doors - Contact Form</title>
+    <title>Doors - Contact Form with Cards and Counter</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,14 +23,29 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 600px;
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
-            color: #333;
+            color: #2d6a4f; /* Dark Green for Header */
+        }
+
+        .counter {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #555;
         }
 
         .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .card {
+            background-color: #ffffff; /* White background for card */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 128, 0, 0.25); /* Heavy green shadow */
+            padding: 20px;
             margin-bottom: 20px;
         }
 
@@ -44,7 +59,7 @@
         input[type="text"], input[type="number"], textarea {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #b7e4c7; /* Light green border */
             border-radius: 5px;
             font-size: 16px;
         }
@@ -54,14 +69,10 @@
             resize: none;
         }
 
-        .notes-section {
-            margin-top: 30px;
-        }
-
         button {
             width: 100%;
             padding: 15px;
-            background-color: #28a745;
+            background-color: #1b4332; /* Dark green for button */
             color: white;
             font-size: 18px;
             border: none;
@@ -70,50 +81,53 @@
         }
 
         button:hover {
-            background-color: #218838;
+            background-color: #2d6a4f;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Doors</h1>
-        <form>
-            <!-- Business Name -->
-            <div class="form-group">
-                <label for="businessName">Business Name</label>
-                <input type="text" id="businessName" placeholder="Enter your business name">
+
+        <!-- Counter Display -->
+        <div class="counter">
+            Form Submitted <span id="counterValue">0</span> times
+        </div>
+
+        <!-- Form Fields -->
+        <form id="contactForm" name="doors-contact-form" method="POST" data-netlify="true">
+            <!-- Netlify Hidden Input -->
+            <input type="hidden" name="form-name" value="doors-contact-form">
+
+            <!-- Business Name Card -->
+            <div class="card">
+                <div class="form-group">
+                    <label for="businessName">Business Name</label>
+                    <input type="text" id="businessName" name="business-name" placeholder="Enter your business name" required>
+                </div>
             </div>
 
-            <!-- Contact Name -->
-            <div class="form-group">
-                <label for="contactName">Contact Name</label>
-                <input type="text" id="contactName" placeholder="Enter contact name">
+            <!-- Contact Name Card -->
+            <div class="card">
+                <div class="form-group">
+                    <label for="contactName">Contact Name</label>
+                    <input type="text" id="contactName" name="contact-name" placeholder="Enter contact name" required>
+                </div>
             </div>
 
-            <!-- Phone Number -->
-            <div class="form-group">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="number" id="phoneNumber" placeholder="Enter phone number">
+            <!-- Phone Number Card -->
+            <div class="card">
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="number" id="phoneNumber" name="phone-number" placeholder="Enter phone number" required>
+                </div>
             </div>
 
-            <!-- Notes Section -->
-            <div class="notes-section">
-                <h2>Notes</h2>
+            <!-- Notes Section Card -->
+            <div class="card">
                 <div class="form-group">
-                    <label for="note1">Note 1</label>
-                    <textarea id="note1" placeholder="Enter note 1"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="note2">Note 2</label>
-                    <textarea id="note2" placeholder="Enter note 2"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="note3">Note 3</label>
-                    <textarea id="note3" placeholder="Enter note 3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="note4">Note 4</label>
-                    <textarea id="note4" placeholder="Enter note 4"></textarea>
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes" placeholder="Enter additional notes" required></textarea>
                 </div>
             </div>
 
@@ -121,5 +135,22 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+
+    <script>
+        let counter = 0;
+
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            // Prevent default form submission (for counter increment test)
+            event.preventDefault();
+
+            // Increment the counter
+            counter++;
+            // Update the counter display on the page
+            document.getElementById("counterValue").innerText = counter;
+
+            // Let Netlify handle the form submission (after incrementing the counter)
+            this.submit();
+        });
+    </script>
 </body>
 </html>
