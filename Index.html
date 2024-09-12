@@ -1,113 +1,140 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-
-const DoorsApp = () => {
-  const [count, setCount] = useState(0);
-  const [business, setBusiness] = useState('');
-  const [contact, setContact] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState('');
-
-  useEffect(() => {
-    // Load count from localStorage on component mount
-    const savedCount = localStorage.getItem('formSubmissionCount');
-    if (savedCount) {
-      setCount(parseInt(savedCount, 10));
-    }
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitMessage('');
-
-    // Netlify Forms submission
-    const form = e.target;
-    fetch('/', {
-      method: 'POST',
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(new FormData(form)).toString()
-    })
-    .then(() => {
-      setCount(prevCount => {
-        const newCount = prevCount + 1;
-        localStorage.setItem('formSubmissionCount', newCount.toString());
-        return newCount;
-      });
-      setSubmitMessage('Form submitted successfully!');
-      setBusiness('');
-      setContact('');
-      setPhoneNumber('');
-    })
-    .catch((error) => {
-      setSubmitMessage('There was an error submitting the form. Please try again.');
-      console.error('Form submission error:', error);
-    })
-    .finally(() => {
-      setIsSubmitting(false);
-    });
-  };
-
-  return (
-    <div className="min-h-screen bg-green-800 flex items-center justify-center">
-      <div className="bg-green-100 p-8 rounded-lg shadow-lg w-96 relative">
-        <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded">
-          Count: {count}
-        </div>
-        <h1 className="text-4xl font-bold mb-6 text-center text-green-800">DOORS</h1>
-        <form onSubmit={handleSubmit} data-netlify="true" name="doors-form">
-          <input type="hidden" name="form-name" value="doors-form" />
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-green-800 mb-1">1) Business</label>
-            <Input
-              type="text"
-              name="business"
-              value={business}
-              onChange={(e) => setBusiness(e.target.value)}
-              className="w-full"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-green-800 mb-1">2) Contact</label>
-            <Input
-              type="text"
-              name="contact"
-              value={contact}
-              onChange={(e) => setContact(e.target.value)}
-              className="w-full"
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-green-800 mb-1">3) Phone Number</label>
-            <Input
-              type="tel"
-              name="phoneNumber"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full"
-              required
-            />
-          </div>
-          <Button 
-            type="submit" 
-            className="w-full bg-green-800 hover:bg-green-700 text-white"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Submitting...' : 'LOG NOW'}
-          </Button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doors App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #166534;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #dcfce7;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            position: relative;
+        }
+        h1 {
+            color: #166534;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #166534;
+        }
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #86efac;
+            border-radius: 0.25rem;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #166534;
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #14532d;
+        }
+        .count {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+        .message {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .success {
+            color: #16a34a;
+        }
+        .error {
+            color: #dc2626;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="count">Count: <span id="count">0</span></div>
+        <h1>DOORS</h1>
+        <form name="doors-form" netlify>
+            <div class="form-group">
+                <label for="business">1) Business</label>
+                <input type="text" id="business" name="business" required>
+            </div>
+            <div class="form-group">
+                <label for="contact">2) Contact</label>
+                <input type="text" id="contact" name="contact" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">3) Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" required>
+            </div>
+            <button type="submit">LOG NOW</button>
         </form>
-        {submitMessage && (
-          <p className={`mt-4 text-center ${submitMessage.includes('error') ? 'text-red-500' : 'text-green-600'}`}>
-            {submitMessage}
-          </p>
-        )}
-      </div>
+        <div id="message" class="message"></div>
     </div>
-  );
-};
 
-export default DoorsApp;
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const countElement = document.getElementById('count');
+            const messageElement = document.getElementById('message');
+            
+            // Load count from localStorage
+            let count = parseInt(localStorage.getItem('formSubmissionCount')) || 0;
+            countElement.textContent = count;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+
+                fetch('/', {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams(formData).toString()
+                })
+                .then(response => {
+                    if (response.ok) {
+                        count++;
+                        localStorage.setItem('formSubmissionCount', count);
+                        countElement.textContent = count;
+                        messageElement.textContent = 'Form submitted successfully!';
+                        messageElement.className = 'message success';
+                        form.reset();
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    messageElement.textContent = 'There was an error submitting the form. Please try again.';
+                    messageElement.className = 'message error';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
