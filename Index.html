@@ -1,0 +1,113 @@
+import React, { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
+const DoorsApp = () => {
+  const [count, setCount] = useState(0);
+  const [business, setBusiness] = useState('');
+  const [contact, setContact] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
+
+  useEffect(() => {
+    // Load count from localStorage on component mount
+    const savedCount = localStorage.getItem('formSubmissionCount');
+    if (savedCount) {
+      setCount(parseInt(savedCount, 10));
+    }
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitMessage('');
+
+    // Netlify Forms submission
+    const form = e.target;
+    fetch('/', {
+      method: 'POST',
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(new FormData(form)).toString()
+    })
+    .then(() => {
+      setCount(prevCount => {
+        const newCount = prevCount + 1;
+        localStorage.setItem('formSubmissionCount', newCount.toString());
+        return newCount;
+      });
+      setSubmitMessage('Form submitted successfully!');
+      setBusiness('');
+      setContact('');
+      setPhoneNumber('');
+    })
+    .catch((error) => {
+      setSubmitMessage('There was an error submitting the form. Please try again.');
+      console.error('Form submission error:', error);
+    })
+    .finally(() => {
+      setIsSubmitting(false);
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-green-800 flex items-center justify-center">
+      <div className="bg-green-100 p-8 rounded-lg shadow-lg w-96 relative">
+        <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded">
+          Count: {count}
+        </div>
+        <h1 className="text-4xl font-bold mb-6 text-center text-green-800">DOORS</h1>
+        <form onSubmit={handleSubmit} data-netlify="true" name="doors-form">
+          <input type="hidden" name="form-name" value="doors-form" />
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-green-800 mb-1">1) Business</label>
+            <Input
+              type="text"
+              name="business"
+              value={business}
+              onChange={(e) => setBusiness(e.target.value)}
+              className="w-full"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-green-800 mb-1">2) Contact</label>
+            <Input
+              type="text"
+              name="contact"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+              className="w-full"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-green-800 mb-1">3) Phone Number</label>
+            <Input
+              type="tel"
+              name="phoneNumber"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="w-full"
+              required
+            />
+          </div>
+          <Button 
+            type="submit" 
+            className="w-full bg-green-800 hover:bg-green-700 text-white"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Submitting...' : 'LOG NOW'}
+          </Button>
+        </form>
+        {submitMessage && (
+          <p className={`mt-4 text-center ${submitMessage.includes('error') ? 'text-red-500' : 'text-green-600'}`}>
+            {submitMessage}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default DoorsApp;
