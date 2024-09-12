@@ -3,138 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doors App</title>
+    <title>Doors - Contact Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #166534;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
         }
+
         .container {
-            background-color: #dcfce7;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            position: relative;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
         }
+
         h1 {
-            color: #166534;
             text-align: center;
-            margin-bottom: 1.5rem;
+            color: #333;
         }
+
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 20px;
         }
+
         label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: #166534;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #555;
         }
-        input {
+
+        input[type="text"], input[type="number"], textarea {
             width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #86efac;
-            border-radius: 0.25rem;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
         }
+
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+
+        .notes-section {
+            margin-top: 30px;
+        }
+
         button {
             width: 100%;
-            padding: 0.75rem;
-            background-color: #166534;
+            padding: 15px;
+            background-color: #28a745;
             color: white;
+            font-size: 18px;
             border: none;
-            border-radius: 0.25rem;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
+
         button:hover {
-            background-color: #14532d;
-        }
-        .count {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background-color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-        }
-        .message {
-            margin-top: 1rem;
-            text-align: center;
-        }
-        .success {
-            color: #16a34a;
-        }
-        .error {
-            color: #dc2626;
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="count">Count: <span id="count">0</span></div>
-        <h1>DOORS</h1>
-        <form name="doors-form" netlify>
+        <h1>Doors</h1>
+        <form>
+            <!-- Business Name -->
             <div class="form-group">
-                <label for="business">1) Business</label>
-                <input type="text" id="business" name="business" required>
+                <label for="businessName">Business Name</label>
+                <input type="text" id="businessName" placeholder="Enter your business name">
             </div>
+
+            <!-- Contact Name -->
             <div class="form-group">
-                <label for="contact">2) Contact</label>
-                <input type="text" id="contact" name="contact" required>
+                <label for="contactName">Contact Name</label>
+                <input type="text" id="contactName" placeholder="Enter contact name">
             </div>
+
+            <!-- Phone Number -->
             <div class="form-group">
-                <label for="phoneNumber">3) Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" required>
+                <label for="phoneNumber">Phone Number</label>
+                <input type="number" id="phoneNumber" placeholder="Enter phone number">
             </div>
-            <button type="submit">LOG NOW</button>
+
+            <!-- Notes Section -->
+            <div class="notes-section">
+                <h2>Notes</h2>
+                <div class="form-group">
+                    <label for="note1">Note 1</label>
+                    <textarea id="note1" placeholder="Enter note 1"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="note2">Note 2</label>
+                    <textarea id="note2" placeholder="Enter note 2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="note3">Note 3</label>
+                    <textarea id="note3" placeholder="Enter note 3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="note4">Note 4</label>
+                    <textarea id="note4" placeholder="Enter note 4"></textarea>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit</button>
         </form>
-        <div id="message" class="message"></div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            const countElement = document.getElementById('count');
-            const messageElement = document.getElementById('message');
-            
-            // Load count from localStorage
-            let count = parseInt(localStorage.getItem('formSubmissionCount')) || 0;
-            countElement.textContent = count;
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                const formData = new FormData(form);
-
-                fetch('/', {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: new URLSearchParams(formData).toString()
-                })
-                .then(response => {
-                    if (response.ok) {
-                        count++;
-                        localStorage.setItem('formSubmissionCount', count);
-                        countElement.textContent = count;
-                        messageElement.textContent = 'Form submitted successfully!';
-                        messageElement.className = 'message success';
-                        form.reset();
-                    } else {
-                        throw new Error('Form submission failed');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    messageElement.textContent = 'There was an error submitting the form. Please try again.';
-                    messageElement.className = 'message error';
-                });
-            });
-        });
-    </script>
 </body>
 </html>
