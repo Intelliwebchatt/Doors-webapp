@@ -1,120 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Form</title>
-  <style>
-    /* Reset Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <title>Heather Glenn - FM Payments | Where we have fun saving you money</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    /* Body Styles */
-    body {
-      font-family: 'Arial, sans-serif';
-      background: linear-gradient(to right, #ece9e6, #ffffff);
-      color: #333;
-      padding: 20px;
-    }
+    <!-- SEO Enhancements -->
+    <meta name="description" content="Heather Glenn is a National Account Executive at FM Payments. We offer cutting-edge payment processing, customized merchant services, and more, ensuring you save money in the process.">
+    <meta name="keywords" content="payment processing, merchant services, FM Payments, point of sale systems, ecommerce solutions, Heather Glenn, financial services">
+    <meta name="robots" content="index, follow">
 
-    /* Container */
-    .container {
-      max-width: 500px;
-      margin: 50px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://www.fm-pay.com">
 
-    /* Heading */
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-weight: 300;
-      color: #555;
-    }
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
-    /* Form */
-    form {
-      display: flex;
-      flex-direction: column;
-    }
+    <style>
+        /* CSS Variables for Colors */
+        :root {
+            --primary-color: #7DCA45;
+            --secondary-color: #f0f0f0;
+            --text-color: #333;
+            --background-color: #ffffff;
+        }
 
-    /* Labels */
-    label {
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #777;
-    }
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
 
-    /* Inputs */
-    input, textarea {
-      margin-bottom: 20px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 16px;
-    }
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
-    /* Input Focus */
-    input:focus, textarea:focus {
-      border-color: #66afe9;
-      outline: none;
-    }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
 
-    /* Button */
-    button {
-      padding: 15px;
-      background-color: #5cb85c;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+        nav ul li {
+            margin: 0 1rem;
+        }
 
-    /* Button Hover */
-    button:hover {
-      background-color: #4cae4c;
-    }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-    /* Responsive */
-    @media (max-width: 600px) {
-      .container {
-        padding: 10px;
-      }
+        /* Main Content */
+        main {
+            max-width: 100%;
+            padding: 2rem 0;
+            background-color: #f5f5f5;
+        }
 
-      h1 {
-        font-size: 24px;
-      }
-    }
-  </style>
+        .section {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Hero Section */
+        #hero {
+            text-align: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        #hero img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 4px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        #hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #hero h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #hero .company-name {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        #hero .tagline {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Section Headings */
+        h2 {
+            color: var(--primary-color);
+        }
+
+        /* Services Section */
+        #services ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #services li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        #services li:last-child {
+            border-bottom: none;
+        }
+
+        #services li::before {
+            content: "✓";
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        /* Contact Form */
+        form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button[type="submit"] {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #6ab33a;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Hidden Field for Netlify Forms */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 840px) {
+            .section {
+                margin: 0 1rem 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Get in Touch</h1>
-    <form name="contact" method="POST" data-netlify="true">
-      <input type="hidden" name="form-name" value="contact">
-      
-      <label for="business">Business</label>
-      <input type="text" id="business" name="business" placeholder="Your Business Name" required>
-      
-      <label for="name">Contact Name</label>
-      <input type="text" id="name" name="name" placeholder="Your Full Name" required>
-      
-      <label for="phone">Phone Number</label>
-      <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
-      
-      <label for="notes">Notes</label>
-      <textarea id="notes" name="notes" placeholder="Additional Information" rows="5"></textarea>
-      
-      <button type="submit">Submit</button>
-    </form>
-  </div>
+
+    <!-- Header -->
+    <header>
+        <nav aria-label="Main Navigation">
+            <ul>
+                <li><a href="#about" aria-label="About Section">About</a></li>
+                <li><a href="#services" aria-label="Services Section">Services</a></li>
+                <li><a href="#contact" aria-label="Contact Section">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Hero Section -->
+        <section id="hero">
+            <img src="2024-08-30-18-24-32-518.jpg" alt="Portrait of Heather Glenn" width="200" height="200" fetchpriority="high">
+            <h1>Heather Glenn</h1>
+            <h2>National Account Executive</h2>
+            <p class="company-name">FM Payments</p>
+            <p class="tagline">Where we have fun saving you money</p>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <h2>About Me</h2>
+            <p>As a National Account Executive at FM Payments, I'm dedicated to providing innovative payment solutions tailored to your business needs. We believe in making the process of saving money enjoyable and rewarding for our clients.</p>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="section">
+            <h2>Our Services</h2>
+            <ul>
+                <li>Cutting-edge Payment Processing</li>
+                <li>Customized Merchant Services</li>
+                <li>State-of-the-art Point of Sale Systems</li>
+                <li>Comprehensive E-commerce Solutions</li>
+            </ul>
+            <p>For more information about our services, visit <a href="https://fm-pay.com" target="_blank" rel="noopener noreferrer" aria-label="FM Payments Website">fm-pay.com</a></p>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2>Get in Touch</h2>
+            <p>Ready to optimize your payment solutions and have fun saving money? Contact us for a free quote!</p>
+            <form name="contact" method="POST" data-netlify="true">
+                <!-- Hidden form-name input for Netlify -->
+                <input type="hidden" name="form-name" value="contact">
+                <!-- Netlify Honeypot Field for Spam Prevention -->
+                <p class="hidden">
+                    <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                </p>
+                <p>
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Your Name" required aria-label="Your Name">
+                </p>
+                <p>
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Your Email" required aria-label="Your Email">
+                </p>
+                <p>
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" placeholder="Your Message" rows="4" required aria-label="Your Message"></textarea>
+                </p>
+                <button type="submit" aria-label="Send Message">Send Message</button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Heather Glenn - FM Payments. All rights reserved.</p>
+    </footer>
+
+    <!-- Chatbot script placed at the end of the body -->
+    <script src="https://app.aminos.ai/js/chat_plugin.js" data-bot-id="33141"></script>
 </body>
 </html>
